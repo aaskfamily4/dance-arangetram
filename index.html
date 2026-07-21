@@ -561,6 +561,28 @@
   }
   .rsvp-note strong{color:var(--ink-blue);}
 
+  .rsvp-success{
+    text-align:center;
+    padding:20px 0 8px;
+  }
+  .rsvp-success svg{
+    width:46px; height:46px;
+    color:var(--teal);
+    margin:0 auto 14px;
+  }
+  .rsvp-success h3{
+    color:var(--ink-blue);
+    font-size:1.6rem;
+    margin-bottom:10px;
+  }
+  .rsvp-success p{
+    color:var(--ink-blue-soft);
+    font-size:1.05rem;
+    line-height:1.6;
+    max-width:380px;
+    margin:0 auto;
+  }
+
   /* -------- footer -------- */
   footer{
     padding:56px 0 40px;
@@ -779,7 +801,7 @@
     </div>
 
     <div class="rsvp-card">
-      <form action="https://formsubmit.co/aaskfamily4@gmail.com" method="POST">
+      <form id="rsvpForm" action="https://formsubmit.co/aaskfamily4@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="New RSVP — Anannya's Bharatanatyam Arangetram">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
@@ -815,6 +837,12 @@
         <button type="submit" class="submit-btn">Send RSVP</button>
       </form>
 
+      <div id="rsvpSuccess" class="rsvp-success" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M8 12.5l2.5 2.5L16 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Thank You!</h3>
+        <p>Your RSVP has been received. We can't wait to celebrate this special day with you.</p>
+      </div>
+
       <p class="rsvp-note">Kindly RSVP by <strong>September 15th, 2026</strong></p>
     </div>
   </section>
@@ -826,6 +854,35 @@
   <div class="family">Karthikeyan &middot; Saisudha &middot; Akash &middot; &amp; Grandparents</div>
   <div class="small">Bharatanatyam Arangetram of Kum. Anannya Karthikeyan — September 27, 2026</div>
 </footer>
+
+<script>
+  var rsvpForm = document.getElementById('rsvpForm');
+  if (rsvpForm) {
+    rsvpForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = rsvpForm.querySelector('.submit-btn');
+      var originalLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch('https://formsubmit.co/ajax/aaskfamily4@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(rsvpForm)
+      })
+        .then(function (res) {
+          if (!res.ok) { throw new Error('Request failed'); }
+          rsvpForm.style.display = 'none';
+          document.getElementById('rsvpSuccess').style.display = 'block';
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = originalLabel;
+          alert("Something went wrong sending your RSVP. Please try again, or email us directly at aaskfamily4@gmail.com.");
+        });
+    });
+  }
+</script>
 
 </body>
 </html>
