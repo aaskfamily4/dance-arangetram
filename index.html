@@ -330,14 +330,12 @@
     font-size:1.12rem;
   }
   .rsvp-subline{
-    white-space:nowrap;
+    white-space:normal;
     text-align:center;
-    width:100vw;
-    position:relative;
-    left:50%;
-    transform:translateX(-50%);
+    max-width:600px;
+    margin:12px auto 0;
     padding:0 16px;
-    font-size:clamp(0.62rem, 2.1vw, 1.12rem);
+    font-size:1.12rem;
   }
 
   /* -------- host note -------- */
@@ -625,16 +623,7 @@
     .radio-row{gap:16px;}
     .portrait{max-width:360px;}
     .quick-card{font-size:0.85rem;}
-    .rsvp-subline{
-      white-space:normal;
-      width:auto;
-      position:static;
-      left:auto;
-      transform:none;
-      padding:0 20px;
-      font-size:0.95rem;
-      line-height:1.5;
-    }
+    .rsvp-subline{font-size:1rem;}
   }
 
 </style>
